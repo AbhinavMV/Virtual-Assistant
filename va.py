@@ -2,10 +2,18 @@ import pyttsx3
 import speech_recognition as sr
 import datetime 
 import wikipedia
+import webbrowser
+import os
+import random
 
 engine = pyttsx3.init()
 voices = engine.getProperty("voices")
 engine.setProperty("voice",voices[0].id)
+gcPath = "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
+vsPath = "\"C:\\Users\\Administrator\\Desktop\\Microsoft VS Code\\Code.exe\""
+musicPath = "E:\\SONGS\\"
+
+webbrowser.register('chrome', None,webbrowser.BackgroundBrowser(gcPath))
 
 def wishMe():
     time = datetime.datetime.now().hour
@@ -40,8 +48,21 @@ def speak(audio):
 
 if __name__ == "__main__":
     wishMe()  
-    query = "Shahrukh khan wikipedia"
+    query = "open chegg".lower()
     if "wikipedia" in query:
         query = query.replace("wikipedia","")
         speak(f"The first two lines of {query}are ")
         print(wikipedia.summary(query , sentences=2))
+    elif "play music" in query:
+        songPath = random.choice(os.listdir(musicPath))
+        filePath = "\""+musicPath+songPath+"\""
+        os.system(filePath)
+    elif "open youtube" in query:
+        webbrowser.get("chrome").open("youtube.com")
+    elif "open google" in query:
+        webbrowser.get("chrome").open("google.com")
+    elif "open code" in query:
+        os.system(vsPath)
+    elif "open chegg" in query:
+        webbrowser.get("chrome").open("expert.chegg.com")
+        
